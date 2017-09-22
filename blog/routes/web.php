@@ -11,15 +11,18 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/tasks', function () {
 
-	$tasks = [
-		'Doing something for Moon',
+	$tasks = DB::table('tasks')->latest()->get();
 
-		'Go to work',
+    return view('tasks.index', compact('tasks'));
+});
 
-		'Doing something for Moon'
-	];
 
-    return view('welcome', compact('tasks'));
+
+Route::get('tasks/{task}', function ($id) {
+
+	$task = DB::table('tasks')->find($id);
+
+    return view('tasks.show', compact('task'));
 });
