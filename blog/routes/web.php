@@ -17,4 +17,3 @@ Route::get('tasks/{task}', function ($id) {
 
     return view('tasks.show', compact('task'));
 });
-
