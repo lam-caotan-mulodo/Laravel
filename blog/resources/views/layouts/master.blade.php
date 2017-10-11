@@ -38,7 +38,6 @@
       </div><!-- /.row -->
 
     </div><!-- /.container -->
-
     @include ('layouts.footer')
   </body>
 </html>
