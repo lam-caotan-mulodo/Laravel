@@ -6,16 +6,18 @@ use App\Post;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }        
     public function index()
     {
         $posts = Post::latest()->get();
 
     	return view('posts.index',compact('posts'));
     }
-
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
     	return view('posts.show',compact('post'));
     }
     public function create()
@@ -29,8 +31,9 @@ class PostsController extends Controller
             'title' => 'required' ,
             'body'  => 'required'             
         ]);
-        Post::create(request(['title','body']));
-
+        auth()->user()->publish(
+            new Post(request(['title','body']))
+        );
         return redirect('/');
     }
 }
